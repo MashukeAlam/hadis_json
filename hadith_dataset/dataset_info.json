@@ -1,0 +1,24 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "narrator": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "english_text": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "hadith_link": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "reference": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": ""
+}
