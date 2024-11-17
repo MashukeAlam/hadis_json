@@ -12,19 +12,15 @@ def fetch_html(url):
         return None
 
 def parse_hadith_page(html_content):
-    # Initialize BeautifulSoup
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    # List to hold all hadith data
     hadith_list = []
 
-    # Find all hadith containers
     hadith_containers = soup.find_all('div', class_='actualHadithContainer')
 
     for container in hadith_containers:
         hadith_data = {}
         
-        # Extract the English hadith text
         english_container = container.find('div', class_='english_hadith_full')
         if english_container:
             narrator = english_container.find('div', class_='hadith_narrated')
@@ -49,11 +45,9 @@ def parse_hadith_page(html_content):
                     href = link.get('href')
                     hadith_data['hadith_link'] = href
         
-        # Extract hadith reference
         reference = container.find('div', class_='hadith_reference_sticky')
         hadith_data['reference'] = reference.text.strip() if reference else None
 
-        # Add hadith data to the list
         hadith_list.append(hadith_data)
 
     return hadith_list
@@ -86,7 +80,6 @@ def main():
                 hadith_data = parse_hadith_page(html_content)
                 all_hadith_data.extend(hadith_data)
             
-    # Save data to JSON file
     with open('hadith_data.json', 'w', encoding='utf-8') as f:
         json.dump(all_hadith_data, f, ensure_ascii=False, indent=4)
     
