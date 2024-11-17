@@ -59,22 +59,33 @@ def parse_hadith_page(html_content):
     return hadith_list
 
 def main():
-    base_url = 'https://sunnah.com/bukhari/'
-    start_index = 1
-    end_index = 97  # Define your range here
+    base_url = 'https://sunnah.com/'
+
+    books = ['bukhari', 'muslim', 'nasai', 'abudawud', 'tirmidhi', 'ibnmajah', 'malik', 'ahmad']
+    page_ranges = {
+        'bukhari': (1, 98),
+        'muslim': (1, 57),
+        'nasai': (1, 52),
+        'abudawud': (1, 44),
+        'tirmidhi': (1, 50),
+        'ibnmajah': (1, 38),
+        'malik': (1, 62),
+        'ahmad': (1, 8)
+    }
 
     all_hadith_data = []
 
-    for i in range(start_index, end_index + 1):
-        url = f"{base_url}{i}"
-        print(f"Fetching URL: {url}")
-        html_content = fetch_html(url)
-        
-        if html_content:
-            print(f"Fetching complete. Parsing content from {url}") 
-            hadith_data = parse_hadith_page(html_content)
-            all_hadith_data.extend(hadith_data)
-        
+    for book in books:
+        for i in range(*page_ranges[book]):
+            url = f"{base_url}{book}/{i}"
+            print(f"Fetching URL: {url}")
+            html_content = fetch_html(url)
+            
+            if html_content:
+                print(f"Fetching complete. Parsing content from {url}") 
+                hadith_data = parse_hadith_page(html_content)
+                all_hadith_data.extend(hadith_data)
+            
     # Save data to JSON file
     with open('hadith_data.json', 'w', encoding='utf-8') as f:
         json.dump(all_hadith_data, f, ensure_ascii=False, indent=4)
