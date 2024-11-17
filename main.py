@@ -78,11 +78,11 @@ def main():
     for book in books:
         for i in range(*page_ranges[book]):
             url = f"{base_url}{book}/{i}"
-            print(f"Fetching URL: {url}")
+            print(f"GET: {url}", end='')
             html_content = fetch_html(url)
             
             if html_content:
-                print(f"Fetching complete. Parsing content from {url}") 
+                print(f" OK.") 
                 hadith_data = parse_hadith_page(html_content)
                 all_hadith_data.extend(hadith_data)
             
@@ -90,7 +90,7 @@ def main():
     with open('hadith_data.json', 'w', encoding='utf-8') as f:
         json.dump(all_hadith_data, f, ensure_ascii=False, indent=4)
     
-    print(f"Data saved to hadith_data.json")
+    print(f"\nSAVED: hadith_data.json")
 
 if __name__ == "__main__":
     main()
